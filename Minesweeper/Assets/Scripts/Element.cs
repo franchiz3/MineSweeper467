@@ -39,7 +39,13 @@ public class Element : MonoBehaviour {
         {
             Griddy.uncoverMines();
             // game over
-            print("you lose");
+            //print("you lose");
+            GameObject game =  GameObject.FindGameObjectWithTag("Lose");
+            if(game != null)
+            game.SetActive(true);
+            Invoke("loadMain", 4);
+            game.SetActive(false);
+            //Application.LoadLevel("loseMenu");
         }
         else
         {
@@ -53,6 +59,11 @@ public class Element : MonoBehaviour {
             if (Griddy.isFinished())
                 print("Winner Winner Chicken Dinner!");
         }
+    }
+
+    void loadMain()
+    {
+       
     }
 
 

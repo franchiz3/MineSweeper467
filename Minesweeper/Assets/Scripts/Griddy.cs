@@ -59,8 +59,12 @@ public class Griddy
     public static bool isFinished()
     {
         foreach (Element elem in elements)
+        {
             if (elem.isCovered() && !elem.isMine)
+            {
                 return false; //continue
+            }   
+        }
         return true; // win!
     }
 
