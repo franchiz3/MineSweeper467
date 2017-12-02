@@ -20,7 +20,7 @@ public class StartOptions : MonoBehaviour {
 
 	private PlayMusic playMusic;										//Reference to PlayMusic script
 	private float fastFadeIn = .01f;									//Very short fade time (10 milliseconds) to start playing music immediately without a click/glitch
-	private ShowPanels showPanels;										//Reference to ShowPanels script on UI GameObject, to show and hide panels
+	public  ShowPanels showPanels;										//Reference to ShowPanels script on UI GameObject, to show and hide panels
 
 	
 	void Awake()
@@ -103,7 +103,9 @@ public class StartOptions : MonoBehaviour {
 	{
 		//Pause button now works if escape is pressed since we are no longer in Main menu.
 		inMainMenu = false;
-        Application.LoadLevel("mainGame");
+        Scene active = SceneManager.GetActiveScene();
+        SceneManager.LoadSceneAsync("mainGame");
+        SceneManager.UnloadSceneAsync(active);
         //If changeMusicOnStart is true, fade out volume of music group of AudioMixer by calling FadeDown function of PlayMusic, using length of fadeColorAnimationClip as time. 
         //To change fade time, change length of animation "FadeToColor"
         if (changeMusicOnStart) 

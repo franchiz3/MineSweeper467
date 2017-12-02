@@ -12,7 +12,7 @@ public class PlayMusic : MonoBehaviour {
 	public AudioMixerSnapshot volumeUp;				//Reference to Audio mixer snapshot in which the master volume of main mixer is turned up
 
 
-	private AudioSource musicSource;				//Reference to the AudioSource which plays music
+	private static AudioSource musicSource;				//Reference to the AudioSource which plays music
 	private float resetTime = .01f;					//Very short time used to fade in near instantly without a click
 
 
@@ -63,7 +63,10 @@ public class PlayMusic : MonoBehaviour {
 		//Play the selected clip
 		musicSource.Play ();
 	}
-
+    public static void stopMusic()
+    {
+        musicSource.Stop();
+    }
 	//Call this function to very quickly fade up the volume of master mixer
 	public void FadeUp(float fadeTime)
 	{
