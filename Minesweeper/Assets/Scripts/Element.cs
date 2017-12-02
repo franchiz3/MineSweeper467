@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Element : MonoBehaviour {
 
     public bool isMine, covered;
+    TimeController timeScore;
 
     // Different Textures
     public Sprite[] emptyTextures;
@@ -23,9 +24,9 @@ public class Element : MonoBehaviour {
         int x = (int)transform.position.x;
         int y = (int)transform.position.y;
         Griddy.elements[x, y] = this;
+        timeScore = GameObject.FindGameObjectWithTag("GameController").GetComponent<TimeController>();
         //Griddy.uncoverMines();
     }
-
     public void loadTexture(int adjacentCount)
     {
         if (isMine)
@@ -55,6 +56,7 @@ public class Element : MonoBehaviour {
         else
         {
             // show adjacent mine number
+            timeScore.endTime = Time.time;
             int x = (int)transform.position.x;
             int y = (int)transform.position.y;
             loadTexture(Griddy.adjacentMines(x, y));
@@ -62,9 +64,15 @@ public class Element : MonoBehaviour {
             // uncover area without mines
             Griddy.FFuncover(x, y, new bool[Griddy.w, Griddy.h]);
             if (Griddy.isFinished())
-            {             
-                //Invoke("loadWin", 1);       
-                Debug.Log("Win Triggered");
+            {
+                ScoreData score = new ScoreData();
+                float newScore = timeScore.getScore(timeScore.endTime);
+                if (newScore > score.highScore)
+                    score.setHighScore(newScore);
+                else
+                    score.setLastScore(newScore);
+                Invoke("loadWin", 1);       
+                //Debug.Log("Win Triggered");
             }
                 
         }
